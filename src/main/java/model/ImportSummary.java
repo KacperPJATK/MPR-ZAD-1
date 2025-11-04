@@ -19,4 +19,12 @@ public final class ImportSummary {
     public List<String> getErrorList() {
         return errorList;
     }
+
+    @Override
+    public String toString() {
+        return "ImportSummary{" +
+                "numberOfEmployeesImported=" + numberOfEmployeesImported +
+                ", errorList=" + errorList +
+                '}';
+    }
 }

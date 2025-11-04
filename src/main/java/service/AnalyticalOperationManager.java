@@ -1,5 +1,6 @@
 package service;
 
+import model.CompanyStatistics;
 import model.Employee;
 import model.Position;
 
@@ -14,4 +15,6 @@ public interface AnalyticalOperationManager {
     Map<Position, List<Employee>> getEmployeesGroupedByPosition();
 
     Map<Position, Long> getNumberOfEmployeesPerPosition();
+
+    Map<String, CompanyStatistics> getCompanyStatistics(String companyName);
 }

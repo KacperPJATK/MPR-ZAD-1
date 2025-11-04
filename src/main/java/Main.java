@@ -1,9 +1,12 @@
+import model.CompanyStatistics;
 import model.Employee;
+import model.ImportSummary;
 import model.Position;
 import service.*;
 
 import java.math.BigDecimal;
 import java.nio.file.Paths;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
@@ -12,7 +15,8 @@ public class Main {
         FinancialOperationManager financial = new FinancialOperationManagerImpl();
 
         ImportService importService = new CSVImportService();
-        importService.importData(Paths.get("src/main/resources/employees.csv"));
+        ImportSummary summary = importService.importData(Paths.get("src/main/resources/employees.csv"));
+        System.out.println(summary);
 
         employeesManager.addEmployee(new Employee(
                 "Anna", "Nowak", "anna.nowak@techcorp.com",
@@ -75,6 +79,10 @@ public class Main {
 //            System.err.println(e.getMessage()); -- można też tak ale
 //            ze względu na sposób drukowania użyłem wersji powyżej
         }
+
+        Map<String, CompanyStatistics> techFlow = analytical.getCompanyStatistics("InnovaSoft");
+        techFlow.entrySet().forEach(System.out::println);
+
 
 
     }
