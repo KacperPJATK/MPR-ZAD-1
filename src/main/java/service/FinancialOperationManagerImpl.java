@@ -10,15 +10,10 @@ import java.util.List;
 
 public class FinancialOperationManagerImpl implements FinancialOperationManager {
 
-    private final EmployeesRepository repository;
-
-    public FinancialOperationManagerImpl(EmployeesRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public BigDecimal getAverageSalary() {
-        List<Employee> employees = repository.getEmployees();
+        List<Employee> employees = EmployeesRepository.getEmployees();
 
         if (employees.isEmpty()) {
             return BigDecimal.ZERO;
@@ -36,7 +31,7 @@ public class FinancialOperationManagerImpl implements FinancialOperationManager 
 
     @Override
     public Employee getTheBestPaidEmployee() {
-        List<Employee> employees = repository.getEmployees();
+        List<Employee> employees = EmployeesRepository.getEmployees();
         return employees.stream()
                 .max(Comparator.comparing(Employee::getSalary))
                 .orElse(null);

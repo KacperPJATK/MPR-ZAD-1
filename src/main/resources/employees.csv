@@ -1,0 +1,11 @@
+firstName,lastName,email,company,position,salary
+Jan,Kowalski,jan.kowalski@techflow.pl,TechFlow,PREZES,25000
+Anna,Nowak,anna.nowak@innova.pl,InnovaSoft,WICEPREZES,18000
+Piotr,Zieliński,piotr.zielinski@codehaus.pl,CodeHaus,MANAGER,12000
+Katarzyna,Wójcik,katarzyna.wojcik@softdev.pl,SoftDev,PROGRAMISTA,8000
+Tomasz,Lis,tomasz.lis@nextgen.pl,NextGen,STAZYSTA,3000
+Maria,Wiśniewska,maria.wisniewska@alphasoft.pl,AlphaSoft,PROGRA__MISTA,8000
+Łukasz,Maj,lukasz.maj@innova.pl,InnovaSoft,MANAGER,12000
+Ewelina,Kowalczyk,ewelina.kowalczyk@techflow.pl,TechFlow,WICEPREZES,-18000
+Michał,Dąbrowski,michal.dabrowski@codehaus.pl,CodeHaus,STAZYSTA,3000
+Alicja,Kaczmarek,alicja.kaczmarek@nextgen.pl,NextGen,PREZES,25000

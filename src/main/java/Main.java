@@ -1,16 +1,18 @@
 import model.Employee;
 import model.Position;
-import repository.EmployeesRepository;
 import service.*;
 
 import java.math.BigDecimal;
+import java.nio.file.Paths;
 
 public class Main {
     public static void main(String[] args) {
-        EmployeesRepository repository = new EmployeesRepository();
-        EmployeesManager employeesManager = new EmployeesManagerImpl(repository);
-        AnalyticalOperationManager analytical = new AnalyticalOperationManagerImpl(repository);
-        FinancialOperationManager financial = new FinancialOperationManagerImpl(repository);
+        EmployeesManager employeesManager = new EmployeesManagerImpl();
+        AnalyticalOperationManager analytical = new AnalyticalOperationManagerImpl();
+        FinancialOperationManager financial = new FinancialOperationManagerImpl();
+
+        ImportService importService = new CSVImportService();
+        importService.importData(Paths.get("src/main/resources/employees.csv"));
 
         employeesManager.addEmployee(new Employee(
                 "Anna", "Nowak", "anna.nowak@techcorp.com",
@@ -73,5 +75,7 @@ public class Main {
 //            System.err.println(e.getMessage()); -- można też tak ale
 //            ze względu na sposób drukowania użyłem wersji powyżej
         }
+
+
     }
 }

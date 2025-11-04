@@ -8,13 +8,18 @@ public class Employee {
 
     private final String surname;
 
-    private final String email;
+    private String email;
 
-    private final String companyName;
+    private String companyName;
 
-    private final Position position;
+    private Position position;
 
-    private final BigDecimal salary;
+    private BigDecimal salary;
+
+    public Employee(String name, String surname) {
+        this.name = name;
+        this.surname = surname;
+    }
 
     public Employee(
             String name, String surname, String email,
@@ -30,6 +35,10 @@ public class Employee {
         this.companyName = Objects.requireNonNull(companyName, "companyName nie może być null");
         this.position = Objects.requireNonNull(position, "position nie może być null");
         this.salary = position.getSalary();
+    }
+
+    public static Employee emptyEmployee() {
+        return new Employee("empty", "empty");
     }
 
     public String getName() {
