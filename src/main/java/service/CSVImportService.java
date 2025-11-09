@@ -1,5 +1,6 @@
 package service;
 
+import exception.InvalidDataException;
 import model.Employee;
 import model.ImportSummary;
 import model.Pair;
@@ -80,16 +81,25 @@ public class CSVImportService implements ImportService {
             isPositionCorrect = false;
         }
 
-
-        if (!isPositionCorrect) {
-            String message = String.format("Failed; Pozycja: %s nie istnieje, linia: %s", position, lineNumber);
-            return new Pair<>(message, Employee.emptyEmployee());
+        try {
+            if (!isPositionCorrect) {
+                String message = String.format("Failed; Pozycja: %s nie istnieje, linia: %s", position, lineNumber);
+                throw new InvalidDataException(message);
+            }
+        } catch (InvalidDataException exception) {
+            return new Pair<>(exception.getMessage(), Employee.emptyEmployee());
         }
 
-        if (Integer.parseInt(salary) < 0) {
-            String message = String.format("Failed; Wypłata: %s jest ujemna, linia: %s", salary, lineNumber);
-            return new Pair<>(message, Employee.emptyEmployee());
+
+        try {
+            if (Integer.parseInt(salary) < 0) {
+                String message = String.format("Failed; Wypłata: %s jest ujemna, linia: %s", salary, lineNumber);
+                return new Pair<>(message, Employee.emptyEmployee());
+            }
+        } catch (InvalidDataException exception) {
+            return new Pair<>(exception.getMessage(), Employee.emptyEmployee());
         }
+
 
         String message = String.format("Success; linia: %s", lineNumber);
         return new Pair<>(message,

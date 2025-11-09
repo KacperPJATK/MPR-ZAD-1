@@ -6,6 +6,7 @@ import service.*;
 
 import java.math.BigDecimal;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Map;
 
 public class Main {
@@ -17,6 +18,8 @@ public class Main {
         ImportService importService = new CSVImportService();
         ImportSummary summary = importService.importData(Paths.get("src/main/resources/employees.csv"));
         System.out.println(summary);
+        List<String> errorList = summary.getErrorList();
+        errorList.forEach(System.out::println);
 
         employeesManager.addEmployee(new Employee(
                 "Anna", "Nowak", "anna.nowak@techcorp.com",
