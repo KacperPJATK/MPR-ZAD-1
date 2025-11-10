@@ -33,4 +33,5 @@ public final class CompanyStatistics {
                 ", bestEarningEmployeeCredentials='" + bestEarningEmployeeCredentials + '\'' +
                 '}';
     }
+
 }

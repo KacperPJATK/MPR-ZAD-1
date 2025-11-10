@@ -17,10 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ApiService {
-    public List<Employee> fetchEmployeesFromApi() {
+    public List<Employee> fetchEmployeesFromApi(String uri) {
         try (HttpClient client = HttpClient.newHttpClient()) {
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("https://jsonplaceholder.typicode.com/users"))
+                    .uri(URI.create(uri))
                     .GET()
                     .build();
 

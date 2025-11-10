@@ -15,11 +15,18 @@ public class Main {
         AnalyticalOperationManager analytical = new AnalyticalOperationManagerImpl();
         FinancialOperationManager financial = new FinancialOperationManagerImpl();
 
+        System.out.println("\u001B[32m=== Import Service ===\u001B[0m");
         ImportService importService = new CSVImportService();
         ImportSummary summary = importService.importData(Paths.get("src/main/resources/employees.csv"));
         System.out.println(summary);
         List<String> errorList = summary.getErrorList();
         errorList.forEach(System.out::println);
+
+        System.out.println("\u001B[32m=== Api Service ===\u001B[0m");
+        ApiService apiService = new ApiService();
+        List<Employee> employees = apiService.fetchEmployeesFromApi("https://jsonplaceholder.typicode.com/users");
+        employees.forEach(System.out::println);
+
 
         employeesManager.addEmployee(new Employee(
                 "Anna", "Nowak", "anna.nowak@techcorp.com",
@@ -85,7 +92,6 @@ public class Main {
 
         Map<String, CompanyStatistics> techFlow = analytical.getCompanyStatistics("InnovaSoft");
         techFlow.entrySet().forEach(System.out::println);
-
 
 
     }

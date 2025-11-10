@@ -1,5 +1,7 @@
 package model;
 
+import repository.EmployeesRepository;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -53,12 +55,27 @@ public final class Employee {
         return email;
     }
 
+    public void setEmail(String email) {
+        if (EmployeesRepository.containsEmail(email)) {
+            throw new IllegalArgumentException();
+        }
+        this.email = email;
+    }
+
     public String getCompanyName() {
         return companyName;
     }
 
+
     public Position getPosition() {
         return position;
+    }
+
+    public void setPosition(Position position) {
+        if (Objects.isNull(position)) {
+            throw new NullPointerException();
+        }
+        this.position = position;
     }
 
     public BigDecimal getSalary() {
