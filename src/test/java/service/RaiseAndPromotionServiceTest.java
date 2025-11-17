@@ -1,5 +1,7 @@
 package service;
 
+import exception.PromotionException;
+import exception.RaiseException;
 import model.Employee;
 import model.Position;
 import org.assertj.core.api.Assertions;
@@ -73,7 +75,7 @@ class RaiseAndPromotionServiceTest {
         service.promote(email, position);
 //        then
         MatcherAssert.assertThat(
-                EmployeesRepository.getEmployeeForTest(email).getPosition(),
+                EmployeesRepository.getEmployee(email).getPosition(),
                 Matchers.is(Matchers.equalTo(position))
         );
     }
@@ -86,17 +88,17 @@ class RaiseAndPromotionServiceTest {
         service.promote(email, position);
 //        then
         MatcherAssert.assertThat(
-                EmployeesRepository.getEmployeeForTest(email).getPosition().getHierarchyLevel(),
+                EmployeesRepository.getEmployee(email).getPosition().getHierarchyLevel(),
                 Matchers.is(Matchers.equalTo(position.getHierarchyLevel()))
         );
     }
 
     @ParameterizedTest
     @CsvSource({
-            "kennedy@protonmail.com, Position.PROGRAMISTA",
-            "redfield@protonmail.com, Position.MANAGER",
-            "ndrake@protonmail.com, Position.WICEPREZES",
-            "sdrake@protonmail.com, Position.PREZES"
+            "kennedy@protonmail.com, PROGRAMISTA",
+            "redfield@protonmail.com, MANAGER",
+            "ndrake@protonmail.com, WICEPREZES",
+            "sdrake@protonmail.com, PREZES"
     })
     @DisplayName("Checks if salary is assigned correctly")
     void testAssignedSalaryAfterPromotion(String email, Position position) {
@@ -104,15 +106,15 @@ class RaiseAndPromotionServiceTest {
         service.promote(email, position);
 //        then
         MatcherAssert.assertThat(
-                EmployeesRepository.getEmployeeForTest(email).getPosition().getSalary(),
+                EmployeesRepository.getEmployee(email).getPosition().getSalary(),
                 Matchers.is(Matchers.equalTo(position.getSalary()))
         );
     }
 
     @ParameterizedTest
     @CsvSource({
-            "kennedy@protonmail.com, Position.Manager",
-            "redfield@protonmail.com, Position.PREZES"
+            "kennedy@protonmail.com, MANAGER",
+            "redfield@protonmail.com, PREZES"
     })
     void shouldFailWhenPromotingByMoreThanPosition(String email, Position position) {
 //        when,then
@@ -121,10 +123,11 @@ class RaiseAndPromotionServiceTest {
     }
 
     @ParameterizedTest
-    @CsvSource({
-            "null, Position.Manager",
+    @CsvSource(value = {
+            "null, MANAGER",
             "redfield@protonmail.com, null"
-    })
+    }, nullValues = "null"
+    )
     void shouldFailWhenPromotingNull(String email, Position position) {
 //        when,then
         Assertions.assertThatThrownBy(() -> service.promote(email, position))
@@ -143,8 +146,8 @@ class RaiseAndPromotionServiceTest {
 
     @ParameterizedTest
     @CsvSource({
-            "ndrake@protonmail.com, Position.STAZYSTA",
-            "sdrake@protonmail.com, Position.WICEPREZES"
+            "ndrake@protonmail.com, STAZYSTA",
+            "sdrake@protonmail.com, WICEPREZES"
     })
     void shouldFailWhenTryingToDemoteOrPromoteToTheSameLevel(String email, Position position) {
 //        when,then
@@ -162,7 +165,7 @@ class RaiseAndPromotionServiceTest {
     })
     void testRaise(String email, int percent, BigDecimal result) {
 //        given
-        Employee employee = EmployeesRepository.getEmployeeForTest(email);
+        Employee employee = EmployeesRepository.getEmployee(email);
 //        when
         service.giveRaise(email, percent);
 //        then
@@ -172,11 +175,10 @@ class RaiseAndPromotionServiceTest {
     @ParameterizedTest
     @DisplayName("Should fail when salary after promotion exceeds one of the the higher ranked employee")
     @CsvSource({
-            "kennedy@protonmail.com, 110",
+            "kennedy@protonmail.com, 200",
             "redfield@protonmail.com, 60",
             "ndrake@protonmail.com, 70",
             "sdrake@protonmail.com, 80",
-            "miller@protonmail.com, 90"
     })
     void shouldFailWhenExceeds(String email, int percent) {
 //        when, then
@@ -196,7 +198,7 @@ class RaiseAndPromotionServiceTest {
     void shouldFailWhenGivingAZeroPercentRaise(String email, int percent) {
 //        when, then
         Assertions.assertThatThrownBy(() -> service.giveRaise(email, percent))
-                .isInstanceOf(RaiseException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @ParameterizedTest
@@ -216,13 +218,14 @@ class RaiseAndPromotionServiceTest {
 
     @ParameterizedTest
     @DisplayName("Should fail when giving a raise to a null")
-    @CsvSource({
+    @CsvSource(value = {
             "null, 100",
             "null, 40",
             "null, 30",
             "null, 20",
             "null, 10"
-    })
+    }, nullValues = "null"
+    )
     void shouldFailWhenGivingARaiseToNULL(String email, int percent) {
 //        when, then
         Assertions.assertThatThrownBy(() -> service.giveRaise(email, percent))

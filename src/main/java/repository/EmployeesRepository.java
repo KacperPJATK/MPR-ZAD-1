@@ -30,7 +30,7 @@ public class EmployeesRepository {
         return employees.containsKey(email.toLowerCase());
     }
 
-    public static Employee getEmployeeForTest(String email) {
+    public static Employee getEmployee(String email) {
         return employees.get(email);
     }
 }
