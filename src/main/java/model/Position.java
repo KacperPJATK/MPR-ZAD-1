@@ -17,6 +17,30 @@ public enum Position {
         this.hierarchyLevel = hierarchyLevel;
     }
 
+    public static BigDecimal getNextSalary(Position position) {
+        switch (position) {
+            case PREZES -> {
+                return BigDecimal.valueOf(Integer.MAX_VALUE);
+            }
+            case WICEPREZES -> {
+                return PREZES.getSalary();
+            }
+            case MANAGER -> {
+                return WICEPREZES.getSalary();
+            }
+            case PROGRAMISTA -> {
+                return MANAGER.getSalary();
+            }
+            case STAZYSTA -> {
+                return PROGRAMISTA.getSalary();
+            }
+            default -> {
+                return BigDecimal.ZERO;
+            }
+        }
+
+    }
+
     public BigDecimal getSalary() {
         return salary;
     }
