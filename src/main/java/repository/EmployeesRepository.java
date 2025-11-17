@@ -29,4 +29,8 @@ public class EmployeesRepository {
     public static boolean containsEmail(String email) {
         return employees.containsKey(email.toLowerCase());
     }
+
+    public static Employee getEmployeeForTest(String email) {
+        return employees.get(email);
+    }
 }
