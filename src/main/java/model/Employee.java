@@ -66,7 +66,6 @@ public final class Employee {
         return companyName;
     }
 
-
     public Position getPosition() {
         return position;
     }
@@ -80,6 +79,10 @@ public final class Employee {
 
     public BigDecimal getSalary() {
         return salary;
+    }
+
+    public void setSalary(BigDecimal salary) {
+        this.salary = salary;
     }
 
     @Override
