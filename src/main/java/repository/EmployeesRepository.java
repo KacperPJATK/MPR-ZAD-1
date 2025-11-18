@@ -11,7 +11,10 @@ public class EmployeesRepository {
 
     public static boolean add(Employee employee) {
         if (employees.containsKey(employee.getEmail())) {
-            throw new IllegalArgumentException("Pracownik o takim mailu już istnieje");
+            String message = String.format(
+                    "Pracownik o takim mailu już istnieje: %s", employee.getEmail()
+            );
+            throw new IllegalArgumentException(message);
         } else {
             employees.put(employee.getEmail(), employee);
             return true;

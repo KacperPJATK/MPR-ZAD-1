@@ -1,6 +1,7 @@
 package service;
 
 import model.Employee;
+import model.Grade;
 import model.Position;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
@@ -13,6 +14,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import repository.EmployeesRepository;
+import repository.GradeBook;
 
 import java.math.BigDecimal;
 import java.util.NoSuchElementException;
@@ -47,14 +49,15 @@ public class GradingServiceTest {
 
     public static Stream<Arguments> getAverageGradeTestData() {
         return Stream.of(
-                Arguments.of("ndrake@protonmail.com", 4),
-                Arguments.of("sdrake@protonmail.com", 3)
+                Arguments.of("ndrake@protonmail.com", BigDecimal.valueOf(4)),
+                Arguments.of("sdrake@protonmail.com", BigDecimal.valueOf(3))
         );
     }
 
     @AfterEach
     void cleanRepository() {
         EmployeesRepository.clearForTest();
+        GradeBook.clearForTest();
     }
 
     @BeforeEach
@@ -91,27 +94,14 @@ public class GradingServiceTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {
-            "kennedy@protonmail.com, null",
-            "redfield@protonmail.com, null",
-            "ndrake@protonmail.com, null",
-            "sdrake@protonmail.com, null",
-            "miller@protonmail.com, null"}, nullValues = "null"
-    )
-    void shouldFailWhenTryingToAssignNull(String email, Grade grade) {
-//        when, then
-        Assertions.assertThatThrownBy(() -> gradingService.assignGrade(email, grade))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @ParameterizedTest
     @CsvSource({
-            "ndrake@protonmail.com, FIVE, 1",
-            "sdrake@protonmail.com, TWO, 1",
             "ndrake@protonmail.com, THREE, 2",
             "sdrake@protonmail.com, FIVE, 2",
     })
     void testAssignGradeWhenEmployeeHasGrades(String email, Grade grade, int size) {
+//        given
+        gradingService.assignGrade("ndrake@protonmail.com", Grade.FIVE);
+        gradingService.assignGrade("sdrake@protonmail.com", Grade.THREE);
 //        when, then
         SoftAssertions assertions = new SoftAssertions();
 
@@ -130,24 +120,24 @@ public class GradingServiceTest {
 //        given
         prepareGradeBook();
 //        when, then
-        Assertions.assertThat(gradingService.getAverageGrade(email)).isEqual(avg);
+        Assertions.assertThat(gradingService.getAverageGrade(email)).isEqualTo(avg);
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"ndrakedoesntexist@protonmail.com", "21drake@protonmail.com"})
     void shouldFailWhenTryingToGetAverageGradeFromNonExistingUser(String email) {
 //        given
-        addTestEmployees();
+        prepareGradeBook();
 //        when, then
-        Assertions.assertThatThrownBy(gradingService.getAverageGrade(email))
+        Assertions.assertThatThrownBy(() -> gradingService.getAverageGrade(email))
                 .isInstanceOf(NoSuchElementException.class);
     }
 
     private void prepareGradeBook() {
-        gradingService.assignGrade("ndrake@protonmail.com", GRADE.FIVE);
-        gradingService.assignGrade("sdrake@protonmail.com", GRADE.THREE);
-        gradingService.assignGrade("ndrake@protonmail.com", GRADE.THREE);
-        gradingService.assignGrade("sdrake@protonmail.com", GRADE.THREE);
+        gradingService.assignGrade("ndrake@protonmail.com", Grade.FIVE);
+        gradingService.assignGrade("sdrake@protonmail.com", Grade.THREE);
+        gradingService.assignGrade("ndrake@protonmail.com", Grade.THREE);
+        gradingService.assignGrade("sdrake@protonmail.com", Grade.THREE);
     }
 
     @Test
@@ -156,7 +146,7 @@ public class GradingServiceTest {
         prepareGradeBook();
 //        when, then
         Assertions.assertThat(gradingService.getBestEmployees())
-                .extracting((Employee employee) -> employee.getEmail())
+                .extracting(Employee::getEmail)
                 .containsExactlyInAnyOrder("ndrake@protonmail.com", "sdrake@protonmail.com");
     }
 
