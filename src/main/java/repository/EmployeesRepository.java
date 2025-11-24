@@ -2,12 +2,13 @@ package repository;
 
 import model.Employee;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class EmployeesRepository {
-    private static final Map<String, Employee> employees = new HashMap<>();
+    private static final Map<String, Employee> employees = new LinkedHashMap<>();
 
     public static boolean add(Employee employee) {
         if (employees.containsKey(employee.getEmail())) {
@@ -22,7 +23,7 @@ public class EmployeesRepository {
     }
 
     public static List<Employee> getEmployees() {
-        return List.copyOf(employees.values());
+        return new ArrayList<>(List.copyOf(employees.values()));
     }
 
     public static void clearForTest() {
