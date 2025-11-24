@@ -1,5 +1,6 @@
 package service;
 
+import exception.TeamException;
 import model.Employee;
 import model.Position;
 import org.assertj.core.api.Assertions;
@@ -11,6 +12,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import repository.EmployeesRepository;
+import repository.ProjectRepository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -66,6 +68,7 @@ public class ProjectManagerTest {
     }
 
     public static Stream<Arguments> getTestDataForCreateTeam() {
+        addTestEmployees();
         return Stream.of(
                 Arguments.of("Pros", EmployeesRepository.getEmployees(), true),
                 Arguments.of("Noobs", new ArrayList<Employee>(), false)
@@ -73,29 +76,29 @@ public class ProjectManagerTest {
     }
 
     public static Stream<Arguments> createProjectFailData() {
+        addTestEmployees();
         return Stream.of(
                 Arguments.of("NotEnoughStazysta", prepareFailList(0)),
                 Arguments.of("NotEnoughProgamista", prepareFailList(2)),
-                Arguments.of("NotEnoughManager", prepareFailList(4)),
-                Arguments.of("ToManyWiceprezes", prepareFailList(5)),
-                Arguments.of("ToManyPrezes", prepareFailList(6)),
-                Arguments.of("ToManyPeople", prepareFailList(7))
+                Arguments.of("NotEnoughManager", prepareFailList(5)),
+                Arguments.of("ToManyWiceprezes", prepareFailList(6)),
+                Arguments.of("ToManyPrezes", prepareFailList(7)),
+                Arguments.of("ToManyPeople", prepareFailList(8))
         );
     }
 
     private static List<Employee> prepareFailList(int i) {
         List<Employee> employees = new ArrayList<>(EmployeesRepository.getEmployees());
-
         switch (i) {
             case 0:
                 employees.removeFirst();
                 employees.remove(1);
                 return employees;
             case 2:
-            case 4:
-                employees.remove(i);
-                return employees;
             case 5:
+                employees.remove(EmployeesRepository.getEmployee("ndrake@protonmail.com"));
+                return employees;
+            case 6:
                 Employee employee = new Employee(
                         "Sam", "Drake",
                         "sdrake1@protonmail.com", "NaughtyDog", Position.WICEPREZES,
@@ -103,7 +106,7 @@ public class ProjectManagerTest {
                 );
                 employees.add(employee);
                 return employees;
-            case 6:
+            case 7:
                 Employee employee1 = new Employee(
                         "Sam", "Drake",
                         "sdrake1@protonmail.com", "NaughtyDog", Position.PREZES,
@@ -111,7 +114,7 @@ public class ProjectManagerTest {
                 );
                 employees.add(employee1);
                 return employees;
-            case 7:
+            case 8:
                 Employee employeeA = new Employee(
                         "a", "a", "a@mail.com", "acom",
                         Position.PROGRAMISTA, LocalDate.now());
@@ -125,15 +128,16 @@ public class ProjectManagerTest {
                 employees.add(employeeA);
                 employees.add(employeeB);
                 employees.add(employeeC);
+                return employees;
             default:
                 return Collections.emptyList();
         }
     }
 
+
     @BeforeEach
     void setup() {
         projectManager = new ProjectManagerImpl();
-        addTestEmployees();
     }
 
     @AfterEach
@@ -153,6 +157,7 @@ public class ProjectManagerTest {
     @Test
     void shouldFailWhenTryingToCreateProjectWithAlreadyExistingName() {
 //        given
+        addTestEmployees();
         List<Employee> employees = EmployeesRepository.getEmployees();
         projectManager.createTeam("Existing", employees);
 //        when, then
@@ -177,8 +182,7 @@ public class ProjectManagerTest {
     @ParameterizedTest
     @CsvSource({
             "miller@protonmail.com, Team A, Team B",
-            "kennedy1@protonmail.com, Team B, Team A",
-            "redfield@protonmail.com, Team A, Team B"
+            "kennedy1@protonmail.com, Team B, Team A"
     })
     void moveEmployeeToAnotherTeamTest(String email, String from, String to) {
 //        given
@@ -188,10 +192,11 @@ public class ProjectManagerTest {
                 .isEqualTo(true);
     }
 
+
     @ParameterizedTest
     @CsvSource({
             "millerdoesntexist@protonmail.com, Team A, Team B",
-            "kennedy1@protonmail.com, Team B, Team A"
+            "miller@protonmail.com, Team B, Team A"
     })
     void shouldFailWhenTryingToMoveNonExistingEmployeeBetweenTeams(String email, String from, String to) {
 //        given
@@ -199,8 +204,8 @@ public class ProjectManagerTest {
 //        when, then
         Assertions.assertThatThrownBy(() -> projectManager.moveEmployee(email, from, to))
                 .isInstanceOf(TeamException.class);
-
     }
+
 
     @ParameterizedTest
     @CsvSource({
@@ -213,13 +218,14 @@ public class ProjectManagerTest {
 //        when, then
         Assertions.assertThatThrownBy(() -> projectManager.moveEmployee(email, from, to))
                 .isInstanceOf(TeamException.class);
-
     }
+
 
     @ParameterizedTest
     @CsvSource({
             "ndrake@protonmail.com, Team A, Team B",
-            "sdrake@protonmail.com, Team B, Team A"
+            "sdrake@protonmail.com, Team B, Team A",
+            "redfield@protonmail.com, Team A, Team B"
     })
     void shouldFailWhenTryingToMoveEmployeeBreaksTheMinimalRequirements(String email, String from, String to) {
 //        given
@@ -227,12 +233,12 @@ public class ProjectManagerTest {
 //        when, then
         Assertions.assertThatThrownBy(() -> projectManager.moveEmployee(email, from, to))
                 .isInstanceOf(TeamException.class);
-
     }
+
 
     @ParameterizedTest
     @CsvSource({
-            "sdrake@protonmail.com, Team B, Team A",
+            "sdrake@protonmail.com, Team B, Team A"
     })
     void shouldFailWhenTryingToMoveEmployeeExceedsMaxTeamSize(String email, String from, String to) {
 //        given
@@ -241,15 +247,19 @@ public class ProjectManagerTest {
 //        when, then
         Assertions.assertThatThrownBy(() -> projectManager.moveEmployee(email, from, to))
                 .isInstanceOf(TeamException.class);
-
     }
 
 
     private void prepareTeams() {
-        List<Employee> employees = EmployeesRepository.getEmployees();
-        projectManager.createTeam("Team A", employees);
-        employees.removeLast();
-        projectManager.createTeam("Team B", employees);
+        addTestEmployees();
+
+        List<Employee> all = new ArrayList<>(EmployeesRepository.getEmployees());
+        List<Employee> teamA = new ArrayList<>(all);
+        List<Employee> teamB = new ArrayList<>(all);
+        teamB.removeLast();
+
+        projectManager.createTeam("Team A", teamA);
+        projectManager.createTeam("Team B", teamB);
     }
 
 
