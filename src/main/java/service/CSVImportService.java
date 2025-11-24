@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -105,7 +106,8 @@ public class CSVImportService implements ImportService {
         return new Pair<>(message,
                 new Employee(
                         name, lastName, email, company,
-                        Position.valueOf(position.toUpperCase())
+                        Position.valueOf(position.toUpperCase()),
+                        LocalDate.now()
                 )
         );
     }

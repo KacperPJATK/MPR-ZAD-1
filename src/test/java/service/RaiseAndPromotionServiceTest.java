@@ -18,6 +18,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import repository.EmployeesRepository;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.stream.Stream;
 
 class RaiseAndPromotionServiceTest {
@@ -27,23 +28,28 @@ class RaiseAndPromotionServiceTest {
     private static void addTestEmployees() {
         EmployeesRepository.add(new Employee(
                 "Leon", "Kennedy",
-                "kennedy@protonmail.com", "Capcom", Position.STAZYSTA
+                "kennedy@protonmail.com", "Capcom", Position.STAZYSTA,
+                LocalDate.now()
         ));
         EmployeesRepository.add(new Employee(
                 "Chris", "Redfield",
-                "redfield@protonmail.com", "Capcom", Position.PROGRAMISTA
+                "redfield@protonmail.com", "Capcom", Position.PROGRAMISTA,
+                LocalDate.now()
         ));
         EmployeesRepository.add(new Employee(
                 "Nathan", "Drake",
-                "ndrake@protonmail.com", "NaughtyDog", Position.MANAGER
+                "ndrake@protonmail.com", "NaughtyDog", Position.MANAGER,
+                LocalDate.now()
         ));
         EmployeesRepository.add(new Employee(
                 "Sam", "Drake",
-                "sdrake@protonmail.com", "NaughtyDog", Position.WICEPREZES
+                "sdrake@protonmail.com", "NaughtyDog", Position.WICEPREZES,
+                LocalDate.now()
         ));
         EmployeesRepository.add(new Employee(
                 "Joel", "Miller",
-                "miller@protonmail.com", "NaughtyDog", Position.PREZES
+                "miller@protonmail.com", "NaughtyDog", Position.PREZES,
+                LocalDate.now()
         ));
     }
 

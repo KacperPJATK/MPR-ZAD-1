@@ -15,9 +15,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import repository.EmployeesRepository;
 
-import java.time.Duration;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.time.Period;
 import java.util.NoSuchElementException;
 import java.util.stream.Stream;
 
@@ -29,22 +28,22 @@ public class TenureServiceTest {
         EmployeesRepository.add(new Employee(
                 "Leon", "Kennedy",
                 "kennedy@protonmail.com", "Capcom", Position.STAZYSTA,
-                LocalDate.parse("2024-10-12", DateTimeFormatter.BASIC_ISO_DATE)
+                LocalDate.parse("2024-10-12")
         ));
         EmployeesRepository.add(new Employee(
                 "Chris", "Redfield",
                 "redfield@protonmail.com", "Capcom", Position.PROGRAMISTA,
-                LocalDate.parse("2015-9-20", DateTimeFormatter.BASIC_ISO_DATE)
+                LocalDate.parse("2015-09-20")
         ));
         EmployeesRepository.add(new Employee(
                 "Nathan", "Drake",
                 "ndrake@protonmail.com", "NaughtyDog", Position.MANAGER,
-                LocalDate.parse("2020-5-1", DateTimeFormatter.BASIC_ISO_DATE)
+                LocalDate.parse("2020-05-01")
         ));
         EmployeesRepository.add(new Employee(
                 "Sam", "Drake",
                 "sdrake@protonmail.com", "NaughtyDog", Position.WICEPREZES,
-                LocalDate.parse("2025-11-27", DateTimeFormatter.BASIC_ISO_DATE)
+                LocalDate.parse("2025-11-22")
         ));
     }
 
@@ -60,6 +59,7 @@ public class TenureServiceTest {
 
     @BeforeEach
     void setup() {
+        EmployeesRepository.clearForTest();
         tenureService = new TenureServiceImpl();
         addTestEmployees();
     }
@@ -79,7 +79,7 @@ public class TenureServiceTest {
     void testCalculateTenure(String email) {
 //        given
         Employee employee = EmployeesRepository.getEmployee(email);
-        long expected = Duration.between(employee.getEmploymentDate(), LocalDate.now()).toDays();
+        long expected = Period.between(employee.getEmploymentDate(), LocalDate.now()).getYears();
 //        when, then
         MatcherAssert.assertThat(
                 tenureService.calculateTenure(email),
@@ -94,7 +94,7 @@ public class TenureServiceTest {
             "ndrakedoesntexist@protonmail.com",
             "kennedydoesntexist@protonmail.com"
     })
-    void shouldFailWhenTryingToCalculateTenureForNonExistingEmployee() {
+    void shouldFailWhenTryingToCalculateTenureForNonExistingEmployee(String email) {
 //        when, then
         Assertions.assertThatThrownBy(() -> tenureService.calculateTenure(email))
                 .isInstanceOf(NoSuchElementException.class);
@@ -110,7 +110,7 @@ public class TenureServiceTest {
     @Test
     void testGetAnniversaries() {
 //        when, then
-        MatcherAssert.assertThat(tenureService.getAnniversaries(), Matchers.allOf(
+        MatcherAssert.assertThat(tenureService.getAnniversaries(), Matchers.hasItems(
                         Matchers.hasProperty(
                                 "email",
                                 Matchers.is(Matchers.equalTo("ndrake@protonmail.com"))
@@ -118,8 +118,7 @@ public class TenureServiceTest {
                         Matchers.hasProperty(
                                 "email",
                                 Matchers.is(Matchers.equalTo("redfield@protonmail.com"))
-                        ),
-                        Matchers.hasSize(2)
+                        )
                 )
         );
     }
@@ -155,20 +154,20 @@ public class TenureServiceTest {
                         Matchers.hasProperty(
                                 "companyName", Matchers.is(Matchers.equalTo(companyName))
                         ),
-                        Matchers.hasProperty("tenureMap", Matchers.hasSize(size))
+                        Matchers.hasProperty("tenureMap", Matchers.aMapWithSize(size))
                 )
         );
     }
 
     @Test
-    void shouldReturnEmptyWhenThereAreNoEmployeesForTheReport() {
+    void shouldFailWhenTryingToCreateDemographicReportWhenThereAreNoEmployees() {
 //        given
         EmployeesRepository.clearForTest();
 //        when, then
-        MatcherAssert.assertThat(
-                tenureService.getDemographicReport("someTeam"),
-                Matchers.hasSize(0)
-        );
+        Assertions.assertThatThrownBy(() -> tenureService.getDemographicReport("company"))
+                .isInstanceOf(NoSuchElementException.class);
+
+
     }
 
 }

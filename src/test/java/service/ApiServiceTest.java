@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static model.Position.PROGRAMISTA;
@@ -22,43 +23,43 @@ class ApiServiceTest {
         expected = List.of(
                 new Employee(
                         "Leanne", "Graham", "sincere@april.biz",
-                        "Romaguera-Crona", PROGRAMISTA
+                        "Romaguera-Crona", PROGRAMISTA, LocalDate.now()
                 ),
                 new Employee(
                         "Ervin", "Howell", "shanna@melissa.tv",
-                        "Deckow-Crist", PROGRAMISTA
+                        "Deckow-Crist", PROGRAMISTA, LocalDate.now()
                 ),
                 new Employee(
                         "Clementine", "Bauch", "nathan@yesenia.net",
-                        "Romaguera-Jacobson", PROGRAMISTA
+                        "Romaguera-Jacobson", PROGRAMISTA, LocalDate.now()
                 ),
                 new Employee(
                         "Patricia", "Lebsack", "julianne.oconner@kory.org",
-                        "Robel-Corkery", PROGRAMISTA
+                        "Robel-Corkery", PROGRAMISTA, LocalDate.now()
                 ),
                 new Employee(
                         "Chelsey", "Dietrich", "lucio_hettinger@annie.ca"
-                        , "Keebler LLC", PROGRAMISTA
+                        , "Keebler LLC", PROGRAMISTA, LocalDate.now()
                 ),
                 new Employee(
                         "Mrs.", "Dennis", "karley_dach@jasper.info",
-                        "Considine-Lockman", PROGRAMISTA
+                        "Considine-Lockman", PROGRAMISTA, LocalDate.now()
                 ),
                 new Employee(
                         "Kurtis", "Weissnat", "telly.hoeger@billy.biz",
-                        "Johns Group", PROGRAMISTA
+                        "Johns Group", PROGRAMISTA, LocalDate.now()
                 ),
                 new Employee(
                         "Nicholas", "Runolfsdottir", "sherwood@rosamond.me",
-                        "Abernathy Group", PROGRAMISTA
+                        "Abernathy Group", PROGRAMISTA, LocalDate.now()
                 ),
                 new Employee(
                         "Glenna", "Reichert", "chaim_mcdermott@dana.io",
-                        "Yost and Sons", PROGRAMISTA
+                        "Yost and Sons", PROGRAMISTA, LocalDate.now()
                 ),
                 new Employee(
                         "Clementina", "DuBuque", "rey.padberg@karina.biz",
-                        "Hoeger LLC", PROGRAMISTA
+                        "Hoeger LLC", PROGRAMISTA, LocalDate.now()
                 )
         );
     }

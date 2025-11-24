@@ -6,6 +6,7 @@ import org.junit.jupiter.api.*;
 import repository.EmployeesRepository;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.*;
 
 class AnalyticalOperationManagerImplTest {
@@ -19,11 +20,13 @@ class AnalyticalOperationManagerImplTest {
         EmployeesRepository.clearForTest();
         Employee employee1 = new Employee(
                 "Leon", "Kennedy",
-                "kennedy@protonmail.com", "Capcom", Position.PREZES
+                "kennedy@protonmail.com", "Capcom", Position.PREZES,
+                LocalDate.now()
         );
         Employee employee2 = new Employee(
                 "Chris", "Redfield",
-                "redfield@protonmail.com", "Capcom", Position.WICEPREZES
+                "redfield@protonmail.com", "Capcom", Position.WICEPREZES,
+                LocalDate.now()
         );
         EmployeesRepository.add(employee1);
         EmployeesRepository.add(employee2);
@@ -40,11 +43,13 @@ class AnalyticalOperationManagerImplTest {
         testList = new ArrayList<>();
         testList.add(new Employee(
                 "Leon", "Kennedy",
-                "kennedy@protonmail.com", "Capcom", Position.PREZES
+                "kennedy@protonmail.com", "Capcom", Position.PREZES,
+                LocalDate.now()
         ));
         testList.add(new Employee(
                 "Chris", "Redfield",
-                "redfield@protonmail.com", "Capcom", Position.WICEPREZES
+                "redfield@protonmail.com", "Capcom", Position.WICEPREZES,
+                LocalDate.now()
         ));
 
     }

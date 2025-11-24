@@ -13,6 +13,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +42,8 @@ public class ApiService {
 
                     employees.add(
                             new Employee(fullName[0], fullName[1], email,
-                                    companyName, Position.PROGRAMISTA
+                                    companyName, Position.PROGRAMISTA,
+                                    LocalDate.now()
                             )
                     );
                 }
