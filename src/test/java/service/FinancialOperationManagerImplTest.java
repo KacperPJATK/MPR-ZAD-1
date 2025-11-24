@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import repository.EmployeesRepository;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,11 +27,13 @@ class FinancialOperationManagerImplTest {
     private static void addTestEmployees() {
         EmployeesRepository.add(new Employee(
                 "Leon", "Kennedy",
-                "kennedy@protonmail.com", "Capcom", Position.PREZES
+                "kennedy@protonmail.com", "Capcom", Position.PREZES,
+                LocalDate.now()
         ));
         EmployeesRepository.add(new Employee(
                 "Chris", "Redfield",
-                "redfield@protonmail.com", "Capcom", Position.WICEPREZES
+                "redfield@protonmail.com", "Capcom", Position.WICEPREZES,
+                LocalDate.now()
         ));
     }
 
@@ -69,7 +72,8 @@ class FinancialOperationManagerImplTest {
         addTestEmployees();
         Employee expected = new Employee(
                 "Leon", "Kennedy",
-                "kennedy@protonmail.com", "Capcom", Position.PREZES
+                "kennedy@protonmail.com", "Capcom", Position.PREZES,
+                LocalDate.now()
         );
 //        when
         Employee result = financialOperationManager.getTheBestPaidEmployee();

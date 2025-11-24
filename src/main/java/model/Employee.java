@@ -3,6 +3,7 @@ package model;
 import repository.EmployeesRepository;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public final class Employee {
@@ -18,6 +19,8 @@ public final class Employee {
 
     private BigDecimal salary;
 
+    private LocalDate employmentDate;
+
     public Employee(String name, String surname) {
         this.name = name;
         this.surname = surname;
@@ -25,7 +28,7 @@ public final class Employee {
 
     public Employee(
             String name, String surname, String email,
-            String companyName, Position position
+            String companyName, Position position, LocalDate employmentDate
     ) {
         if (Objects.isNull(email) || email.isBlank()) {
             throw new IllegalArgumentException("Email nie może być pusty");
@@ -37,6 +40,7 @@ public final class Employee {
         this.companyName = Objects.requireNonNull(companyName, "companyName nie może być null");
         this.position = Objects.requireNonNull(position, "position nie może być null");
         this.salary = position.getSalary();
+        this.employmentDate = Objects.requireNonNull(employmentDate, "Data nie może być null");
     }
 
     public static Employee emptyEmployee() {
@@ -107,5 +111,9 @@ public final class Employee {
     @Override
     public int hashCode() {
         return Objects.hashCode(email);
+    }
+
+    public LocalDate getEmploymentDate() {
+        return employmentDate;
     }
 }

@@ -7,6 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import repository.EmployeesRepository;
 
+import java.time.LocalDate;
+
 class EmployeesManagerImplTest {
 
 
@@ -24,7 +26,8 @@ class EmployeesManagerImplTest {
 //        given
         Employee employee = new Employee(
                 "Sam", "Miller",
-                "miller@protonmail.com", "Naughty Dog", Position.PROGRAMISTA
+                "miller@protonmail.com", "Naughty Dog", Position.PROGRAMISTA,
+                LocalDate.now()
         );
 //        when
         boolean result = employeesManager.addEmployee(employee);
@@ -39,7 +42,8 @@ class EmployeesManagerImplTest {
         //        given
         Employee employee = new Employee(
                 "Sam", "Drake",
-                "drake@protonmail.com", "Naughty Dog", Position.PROGRAMISTA
+                "drake@protonmail.com", "Naughty Dog", Position.PROGRAMISTA,
+                LocalDate.now()
         );
 //        when
         employeesManager.addEmployee(employee);
@@ -55,7 +59,8 @@ class EmployeesManagerImplTest {
 //        given
         Employee employee = new Employee(
                 "Sam", "Drake",
-                "drake@protonmail.com", "Naughty Dog", Position.PROGRAMISTA
+                "drake@protonmail.com", "Naughty Dog", Position.PROGRAMISTA,
+                LocalDate.now()
         );
         employeesManager.addEmployee(employee);
 //        when

@@ -6,6 +6,7 @@ import service.*;
 
 import java.math.BigDecimal;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -30,27 +31,27 @@ public class Main {
 
         employeesManager.addEmployee(new Employee(
                 "Anna", "Nowak", "anna.nowak@techcorp.com",
-                "TechCorp", Position.PROGRAMISTA)
+                "TechCorp", Position.PROGRAMISTA, LocalDate.now())
         );
 
         employeesManager.addEmployee(new Employee(
                 "Bartek", "Kowalski", "bartek.kowalski@techcorp.com",
-                "TechCorp", Position.MANAGER)
+                "TechCorp", Position.MANAGER, LocalDate.now())
         );
 
         employeesManager.addEmployee(new Employee(
                 "Celina", "Zielińska", "celina.zielinska@techcorp.com",
-                "TechCorp", Position.STAZYSTA)
+                "TechCorp", Position.STAZYSTA, LocalDate.now())
         );
 
         employeesManager.addEmployee(new Employee(
                 "Dawid", "Adamski", "dawid.adamski@outsourcing.com",
-                "Outsourcing", Position.PROGRAMISTA)
+                "Outsourcing", Position.PROGRAMISTA, LocalDate.now())
         );
 
         employeesManager.addEmployee(new Employee(
                 "Ewa", "Prezes", "ewa.prezes@techcorp.com",
-                "TechCorp", Position.PREZES)
+                "TechCorp", Position.PREZES, LocalDate.now())
         );
 
         System.out.println("\u001B[32m=== Wszyscy pracownicy ===\u001B[0m");
@@ -82,7 +83,7 @@ public class Main {
             System.out.println("\u001B[32m\n=== Próba dodania pracownika o takim samym mailu ===\u001B[0m");
             employeesManager.addEmployee(new Employee(
                     "Anna", "Nowak", "anna.nowak@techcorp.com",
-                    "TechCorp", Position.PROGRAMISTA)
+                    "TechCorp", Position.PROGRAMISTA, LocalDate.now())
             );
         } catch (IllegalArgumentException e) {
             System.out.println("\u001B[31m" + e.getMessage() + "\u001B[0m");
@@ -92,7 +93,5 @@ public class Main {
 
         Map<String, CompanyStatistics> techFlow = analytical.getCompanyStatistics("InnovaSoft");
         techFlow.entrySet().forEach(System.out::println);
-
-
     }
 }

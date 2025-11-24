@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import repository.EmployeesRepository;
 
+import java.time.LocalDate;
 import java.util.stream.Stream;
 
 class EmployeeTest {
@@ -76,7 +77,8 @@ class EmployeeTest {
     void setUp() {
         employee = new Employee(
                 "Aiden", "Pierce",
-                "pierce@gmial.com", "TechCorp", Position.PROGRAMISTA
+                "pierce@gmial.com", "TechCorp", Position.PROGRAMISTA,
+                LocalDate.now()
         );
         EmployeesRepository.add(employee);
     }
@@ -90,7 +92,7 @@ class EmployeeTest {
     @ParameterizedTest
     void testHashCode(String name, String surname, String email, String companyName, Position position) {
 //        given
-        Employee testEmployee = new Employee(name, surname, email, companyName, position);
+        Employee testEmployee = new Employee(name, surname, email, companyName, position, LocalDate.now());
 //        when
         int result = employee.hashCode();
         int expected = testEmployee.hashCode();
@@ -103,7 +105,8 @@ class EmployeeTest {
 //        given
         Employee testEmployee = new Employee(
                 "Aiden", "Pierce",
-                "miller@gmial.com", "TechCorp", Position.PROGRAMISTA
+                "miller@gmial.com", "TechCorp", Position.PROGRAMISTA,
+                LocalDate.now()
         );
 //        when
         int expected = employee.hashCode();
@@ -117,7 +120,8 @@ class EmployeeTest {
 //        given
         Employee testEmployee = new Employee(
                 "Aiden", "Pierce",
-                "miller@gmial.com", "TechCorp", Position.PROGRAMISTA
+                "miller@gmial.com", "TechCorp", Position.PROGRAMISTA,
+                LocalDate.now()
         );
 //        when
         boolean result = employee.equals(testEmployee);
@@ -129,7 +133,7 @@ class EmployeeTest {
     @MethodSource("equalsData")
     void testEquals(String name, String surname, String email, String companyName, Position position) {
 //        given
-        Employee testEmployee = new Employee(name, surname, email, companyName, position);
+        Employee testEmployee = new Employee(name, surname, email, companyName, position, LocalDate.now());
 //        when
         boolean result = employee.equals(testEmployee);
 //        then
@@ -194,7 +198,8 @@ class EmployeeTest {
 //        given, when, then
         Assertions.assertThrows(IllegalArgumentException.class, () -> new Employee(
                 "Aiden", "Pierce",
-                email, "TechCorp", Position.PROGRAMISTA
+                email, "TechCorp", Position.PROGRAMISTA,
+                LocalDate.now()
         ));
     }
 }
