@@ -3,7 +3,6 @@ package service;
 import com.company.testing.doubles.AssignmentResourceAllocatorSpy;
 import com.company.testing.doubles.AvailabilityProviderStub;
 import com.company.testing.doubles.CompetencyProviderFake;
-import com.company.testing.doubles.DummyConfig;
 import model.Employee;
 import model.Position;
 import model.Skills;
@@ -39,7 +38,7 @@ class TaskManagerImplTest {
         assertAll(
                 () -> assertThat(assignmentSpy.getAssignments()).hasSize(1),
                 () -> {
-                    AssignmentResourceAllocatorSpy.TaskAssignment assignment = assignmentSpy.getAssignments().get(0);
+                    AssignmentResourceAllocatorSpy.TaskAssignment assignment = assignmentSpy.getAssignments().getFirst();
                     assertAll(
                             () -> assertThat(assignment.taskId()).isEqualTo("TASK-1"),
                             () -> assertThat(assignment.employees()).containsExactly(competentFirst, competentSecond)
@@ -53,7 +52,6 @@ class TaskManagerImplTest {
     @Test
     void shouldFailWhenNoEmployeeMatchesRequestedSkills() {
         Employee available = employee("qa@example.com", Position.PROGRAMISTA);
-        DummyConfig dummyConfig = new DummyConfig("unused");
         AvailabilityProviderStub availabilityStub = new AvailabilityProviderStub(List.of(available));
         CompetencyProviderFake competencyFake = new CompetencyProviderFake();
         AssignmentResourceAllocatorSpy assignmentSpy = new AssignmentResourceAllocatorSpy();
