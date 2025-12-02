@@ -91,10 +91,6 @@ public class ProjectManagerImpl implements ProjectManager {
         List<Employee> fromTeam = ProjectRepository.getTeam(from);
         List<Employee> toTeam = ProjectRepository.getTeam(to);
 
-        if (fromTeam == null || toTeam == null) {
-            String message = String.format("Team not found while moving between: %s -> %s", from, to);
-            throw new TeamException(message);
-        }
 
         Employee employeeToMove = fromTeam.stream()
                 .filter(e -> e.getEmail().equals(email))
