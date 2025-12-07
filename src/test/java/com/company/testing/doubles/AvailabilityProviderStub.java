@@ -9,8 +9,8 @@ import java.util.List;
 
 @SuppressWarnings("all")
 /**
- * Stub AvailabilityProvider zwracajacy zawsze z gory ustalona liste dostepnych pracownikow,
- * dzieki czemu testy TaskManagera omijaja realny kalendarz.
+ * Stub AvailabilityProvider zwracający zawsze z góry ustaloną liste dostępnych pracowników,
+ * dzięki czemu testy TaskManagera omijają realny kalendarz.
  */
 public class AvailabilityProviderStub implements AvailabilityProvider {
     private final List<Employee> available;

@@ -4,12 +4,12 @@ import java.util.Objects;
 
 @SuppressWarnings("all")
 /**
- * Dummy obiekt konfiguracyjny sluzacy wylacznie do zapelnienia zaleznosci w testach.
+ * Dummy obiekt konfiguracyjny służcy wyłacznie do zapełnienia zależności w testach.
  */
-public final class DummyConfig {
+public final class Dummy {
     private final String value;
 
-    public DummyConfig(String value) {
+    public Dummy(String value) {
         this.value = value;
     }
 
@@ -21,7 +21,7 @@ public final class DummyConfig {
     public boolean equals(Object obj) {
         if (obj == this) return true;
         if (obj == null || obj.getClass() != this.getClass()) return false;
-        var that = (DummyConfig) obj;
+        var that = (Dummy) obj;
         return Objects.equals(this.value, that.value);
     }
 

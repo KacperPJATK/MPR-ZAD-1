@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 @SuppressWarnings("all")
 /**
- * Szpieg CommunicationService zapamietujacy kazdy wyslany reminder wraz z trescia,
- * co pozwala testom sprawdzac komu i co zostalo wyslane.
+ * Szpieg CommunicationService zapamiętujący każdy wysłany reminder wraz z trśecią,
+ * co pozwala testom sprawdzać komu i co zostało wysłane.
  */
 public class CommunicationServiceSpy implements CommunicationService {
     private final List<SentReminder> sent = new ArrayList<>();

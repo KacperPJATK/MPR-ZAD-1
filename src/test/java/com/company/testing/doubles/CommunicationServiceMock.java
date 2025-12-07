@@ -3,9 +3,10 @@ package com.company.testing.doubles;
 import model.Employee;
 import service.CommunicationService;
 
+@SuppressWarnings("all")
 /**
- * Mock CommunicationService pilnujacy, by sendReminder zostal wywolany
- * dokladnie oczekiwana liczbe razy; w przeciwnym razie zglasza blad.
+ * Mock CommunicationService pilnujący, by sendReminder został wywołany
+ * dokładnie oczekiwaną liczbe razy; w przeciwnym razie zgłasza błąd.
  */
 public class CommunicationServiceMock implements CommunicationService {
     private final int expectedCount;

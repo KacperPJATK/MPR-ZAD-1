@@ -1,7 +1,6 @@
 package service;
 
 import model.Employee;
-import repository.EmployeesRepository;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -14,12 +13,6 @@ public class EmployeeExportServiceImpl implements EmployeeExportService {
     private final EmployeeProvider employeeProvider;
     private final EmployeeFormatter employeeFormatter;
     private final FileStorage fileStorage;
-
-    public EmployeeExportServiceImpl() {
-        this.employeeProvider = EmployeesRepository::getEmployees;
-        this.employeeFormatter = (employees, format) -> getFormatter(employees);
-        this.fileStorage = EmployeeExportServiceImpl::getFileStorage;
-    }
 
     EmployeeExportServiceImpl(EmployeeProvider employeeProvider,
                               EmployeeFormatter employeeFormatter,

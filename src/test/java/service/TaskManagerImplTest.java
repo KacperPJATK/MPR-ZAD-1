@@ -3,7 +3,7 @@ package service;
 import com.company.testing.doubles.AssignmentResourceAllocatorSpy;
 import com.company.testing.doubles.AvailabilityProviderStub;
 import com.company.testing.doubles.CompetencyProviderFake;
-import com.company.testing.doubles.DummyConfig;
+import com.company.testing.doubles.Dummy;
 import model.Employee;
 import model.Position;
 import model.Skills;
@@ -53,7 +53,7 @@ class TaskManagerImplTest {
     @Test
     void shouldFailWhenNoEmployeeMatchesRequestedSkills() {
         Employee available = employee("qa@example.com", Position.PROGRAMISTA);
-        DummyConfig dummyConfig = new DummyConfig("unused");
+        Dummy dummy = new Dummy("unused");
         AvailabilityProviderStub availabilityStub = new AvailabilityProviderStub(List.of(available));
         CompetencyProviderFake competencyFake = new CompetencyProviderFake();
         AssignmentResourceAllocatorSpy assignmentSpy = new AssignmentResourceAllocatorSpy();

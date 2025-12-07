@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 @SuppressWarnings("all")
 /**
- * Stub CertificateRepository oparty na liscie w pamieci, pozwalajacy testom przypomnien
- * sterowac, ktore certyfikaty uznane sa za wygasajace bez uzywania persystencji.
+ * Stub CertificateRepository oparty na liście w pamieci, pozwalający testom przypomnien
+ * sterować, które certyfikaty uznane sa za wygasające.
  */
 public class CertificateRepositoryStub implements CertificateRepository {
     private final List<Certification> certifications;

@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Objects;
 @SuppressWarnings("all")
 /**
- * Szpieg ResourceAllocator zbiera wszystkie przydzialy zadan, aby testy mogly
- * zweryfikowac jakie identyfikatory i pracownicy zostaly przekazane.
+ * Szpieg ResourceAllocator zbiera wszystkie przydziały zadań, aby testy mogły
+ * zweryfikować jakie identyfikatory i pracownicy zostały przekazane.
  */
 public class AssignmentResourceAllocatorSpy implements ResourceAllocator {
     private final List<TaskAssignment> assignments = new ArrayList<>();

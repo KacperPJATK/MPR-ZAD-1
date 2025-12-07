@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Map;
 @SuppressWarnings("all")
 /**
- * Stub EmployeeFormatter zwracajacy przygotowane tresci dla formatow i zapamietujacy,
- * jaki format zostal uzyty, by testy eksportu skupialy sie na przeplywie, a nie formatowaniu.
+ * Stub EmployeeFormatter zwracający przygotowane treści dla formatów i zapamietujący,
+ * jaki format został użyty.
  */
 public class EmployeeFormatterStub implements EmployeeFormatter {
     private final Map<String, String> predefined = new LinkedHashMap<>();

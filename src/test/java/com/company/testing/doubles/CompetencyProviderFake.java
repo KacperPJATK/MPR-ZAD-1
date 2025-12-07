@@ -10,8 +10,8 @@ import java.util.Map;
 
 @SuppressWarnings("all")
 /**
- * Fake CompetencyProvider przechowujacy kompetencje w pamieci, aby testy mogly
- * dowolnie ustawiac, ktorzy pracownicy spelniaja wymagane umiejetnosci.
+ * Fake CompetencyProvider przechowujący kompetencje w pamięci, aby testy mogły
+ * dowolnie ustawiać, którzy pracownicy spełniają wymagane umiejętności.
  */
 public class CompetencyProviderFake implements CompetencyProvider {
     private final Map<Skills, List<Employee>> skills = new LinkedHashMap<>();

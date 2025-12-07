@@ -7,8 +7,8 @@ import java.util.List;
 
 @SuppressWarnings("all")
 /**
- * Szpieg FileStorage zbierajacy wszystkie proby zapisu, aby testy mogly sprawdzic
- * sciezki, zawartosc oraz tryb append dla wywolan.
+ * Szpieg FileStorage zbierający wszystkie próby zapisu, aby testy mogły sprawdzić
+ * scieżki, zawartość oraz tryb append dla wywołań.
  */
 public class FileStorageSpy implements FileStorage {
     private final List<Write> writes = new ArrayList<>();

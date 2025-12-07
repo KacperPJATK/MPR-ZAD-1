@@ -3,8 +3,8 @@ package com.company.testing.doubles;
 import service.FileStorage;
 @SuppressWarnings("all")
 /**
- * Mock FileStorage weryfikujacy, ze zapis nastapil na oczekiwanej sciezce
- * i z wlasciwa flaga append; sygnalizuje bledy przy odchyleniach.
+ * Mock FileStorage weryfikujący, czy zapis nastąpił na oczekiwanej scieżce
+ * i z właściwą flagą append.
  */
 public class FileStorageMock implements FileStorage {
     private final String expectedPath;

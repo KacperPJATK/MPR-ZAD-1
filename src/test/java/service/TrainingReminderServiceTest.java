@@ -20,6 +20,7 @@ class TrainingReminderServiceTest {
     // Sprawdza, czy wysylane jest przypomnienie tylko dla certyfikatow wygasajacych w podanym oknie z poprawnymi danymi.
     @Test
     void shouldSendRemindersForCertificatesExpiringSoon() {
+//        given
         Employee anna = employee("anna@example.com");
         Employee bob = employee("bob@example.com");
 
@@ -33,9 +34,9 @@ class TrainingReminderServiceTest {
                 communicationSpy,
                 new DummyReminderLogger()
         );
-
+//        when
         service.sendReminders(LocalDate.of(2024, 1, 1));
-
+//        then
         assertAll(
                 () -> assertThat(communicationSpy.sent()).hasSize(1),
                 () -> {
@@ -51,6 +52,7 @@ class TrainingReminderServiceTest {
     // Sprawdza, czy liczba wyslanych przypomnien zgadza sie z oczekiwaniem mocka komunikacyjnego.
     @Test
     void shouldMatchExpectedSendCountWithMock() {
+//        given
         Employee anna = employee("anna@example.com");
         Employee bob = employee("bob@example.com");
 
@@ -64,9 +66,11 @@ class TrainingReminderServiceTest {
                 communicationMock,
                 new DummyReminderLogger()
         );
+//        when
 
         service.sendReminders(LocalDate.of(2024, 1, 1));
 
+//        then
         communicationMock.verify();
     }
 
