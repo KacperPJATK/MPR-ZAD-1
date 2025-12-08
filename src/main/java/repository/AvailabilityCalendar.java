@@ -3,13 +3,14 @@ package repository;
 import model.Employee;
 import model.Pair;
 import model.TaskDuration;
+import service.AvailabilityProvider;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class AvailabilityCalendar {
+public class AvailabilityCalendar implements AvailabilityProvider {
 
     private static final List<Pair<TaskDuration, Employee>> CALENDAR = getDefaultCalendar();
 
@@ -20,7 +21,8 @@ public class AvailabilityCalendar {
                 .toList();
     }
 
-    public static List<Employee> findAvailable(TaskDuration duration) {
+    @Override
+    public List<Employee> findAvailable(TaskDuration duration) {
 
         List<Employee> available = new ArrayList<>();
         LocalDate newStart = duration.getStart();

@@ -8,6 +8,7 @@ import model.Employee;
 import model.Position;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -18,7 +19,7 @@ class EmployeeExportServiceTest {
 
     // Sprawdza, czy eksport korzysta z podanego formatu, zwraca przygotowana tresc stuba i zapisuje ja raz do magazynu.
     @Test
-    void shouldExportFormattedDataToFileStorage() {
+    void shouldExportFormattedDataToFileStorage() throws IOException {
         List<Employee> employees = List.of(
                 employee("alice@example.com"),
                 employee("bob@example.com")
@@ -51,7 +52,7 @@ class EmployeeExportServiceTest {
 
     // Sprawdza, czy zapis do pliku zostal wywolany wymagana liczbe razy zgodnie z oczekiwaniem mocka.
     @Test
-    void shouldVerifyWriteCalledExpectedTimesWithMock() {
+    void shouldVerifyWriteCalledExpectedTimesWithMock() throws IOException {
         List<Employee> employees = List.of(employee("alice@example.com"));
         InMemoryEmployeeProviderFake employeeProvider = new InMemoryEmployeeProviderFake(employees);
         EmployeeFormatterStub formatterStub = new EmployeeFormatterStub();

@@ -2,14 +2,16 @@ package repository;
 
 import model.Employee;
 import model.Skills;
+import service.CompetencyProvider;
 
 import java.util.*;
 
-public class CompetencyRepository {
+public class CompetencyRepository implements CompetencyProvider {
 
     private static final Map<Skills, List<Employee>> SKILLS = new HashMap<>();
 
-    public static List<Employee> getCompetent(List<Employee> available, Skills skills) {
+    @Override
+    public List<Employee> findCompetent(List<Employee> available, Skills skills) {
         List<Employee> contenders = SKILLS.get(skills);
         if (contenders == null || contenders.isEmpty()) {
             return Collections.emptyList();

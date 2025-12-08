@@ -1,16 +1,18 @@
 package repository;
 
 import model.Employee;
+import service.ResourceAllocator;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HumanResourcesRepository {
+public class HumanResourcesRepository implements ResourceAllocator {
 
     public static final Map<String, List<Employee>> ASSIGNED = new HashMap<>();
 
-    public static void assignTask(String id, List<Employee> competent) {
+    @Override
+    public void assignTask(String id, List<Employee> competent) {
         ASSIGNED.put(id, competent);
     }
 }

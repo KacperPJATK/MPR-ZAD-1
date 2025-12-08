@@ -3,7 +3,6 @@ package service;
 import com.company.testing.doubles.CertificateRepositoryStub;
 import com.company.testing.doubles.CommunicationServiceMock;
 import com.company.testing.doubles.CommunicationServiceSpy;
-import com.company.testing.doubles.DummyReminderLogger;
 import model.Certification;
 import model.Employee;
 import model.Position;
@@ -31,8 +30,7 @@ class TrainingReminderServiceTest {
         CommunicationServiceSpy communicationSpy = new CommunicationServiceSpy();
         TrainingReminderService service = new TrainingReminderServiceImpl(
                 repositoryStub,
-                communicationSpy,
-                new DummyReminderLogger()
+                communicationSpy
         );
 //        when
         service.sendReminders(LocalDate.of(2024, 1, 1));
@@ -63,8 +61,7 @@ class TrainingReminderServiceTest {
         CommunicationServiceMock communicationMock = new CommunicationServiceMock(2);
         TrainingReminderService service = new TrainingReminderServiceImpl(
                 repositoryStub,
-                communicationMock,
-                new DummyReminderLogger()
+                communicationMock
         );
 //        when
 

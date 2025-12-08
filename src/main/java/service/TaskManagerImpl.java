@@ -3,9 +3,6 @@ package service;
 import model.Employee;
 import model.Skills;
 import model.TaskDuration;
-import repository.AvailabilityCalendar;
-import repository.CompetencyRepository;
-import repository.HumanResourcesRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,11 +12,6 @@ public class TaskManagerImpl implements TaskManager {
     private final CompetencyProvider competencyProvider;
     private final ResourceAllocator resourceAllocator;
 
-    public TaskManagerImpl() {
-        this.availabilityProvider = AvailabilityCalendar::findAvailable;
-        this.competencyProvider = CompetencyRepository::getCompetent;
-        this.resourceAllocator = HumanResourcesRepository::assignTask;
-    }
 
     TaskManagerImpl(AvailabilityProvider availabilityProvider,
                     CompetencyProvider competencyProvider,
