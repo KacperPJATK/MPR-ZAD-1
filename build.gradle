@@ -13,6 +13,8 @@ dependencies {
     testImplementation 'org.assertj:assertj-core:3.25.3'
     testImplementation 'org.hamcrest:hamcrest:2.2'
     testImplementation 'org.mockito:mockito-junit-jupiter:5.5.0'
+    implementation 'org.seleniumhq.selenium:selenium-java:4.21.0'
+    implementation 'io.github.bonigarcia:webdrivermanager:6.1.0'
 
 //    Inne
     implementation 'com.google.code.gson:gson:2.10.1'
